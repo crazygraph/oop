@@ -1,0 +1,123 @@
+swagger: "2.0"
+info:
+  description: This is the swagger file that goes with our server code
+  version: "1.0.0"
+  title: Swagger REST Article
+consumes:
+  - "application/json"
+produces:
+  - "application/json"
+
+basePath: "/api/v1"
+
+# Paths supported by the server application
+paths:
+  /instrument:
+    get:
+      operationId: "instrumentservice.read"
+      tags:
+        - instrumentservice
+      summary: "List of Instrument"
+      description: "List and detail information of instrument"
+      parameters:
+        - name: keyword
+          in: query
+          description: keyword string or character
+          type: string
+          required: False
+          allowEmptyValue: true
+      responses:
+        200:
+          description: "Successful read list of instrument"
+          schema:
+            properties:
+              symbol:
+                type: "string"
+              name:
+                type: "string"
+              type:
+                type: "string"
+              region:
+                type: "string"
+
+  /riskreturn:
+    get:
+      operationId: "riskreturnservice.read"
+      tags:
+        - riskreturnservice
+      summary: "Risk and return api"
+      description: "read summary risk and return of selected symbol"
+      parameters:
+        - name: symbols
+          in: query
+          description: stock symbols, check instrument API for symbol list
+          type: array
+          items:
+            type: string
+          required: True
+        - name: start_date
+          in: query
+          description: start date of price data format YYYY-MM-DD example 2018-10-11
+          type: string
+          required: True
+        - name: end_date
+          in: query
+          description: end date of price data format YYYY-MM-DD example 2018-10-11
+          type: string
+          required: True
+      responses:
+        200:
+          description: "Successful read user list operation"
+          schema:
+            properties:
+              symbol:
+                type: "string"
+              annual return:
+                type: "number"
+              annual risk:
+                type: "number"
+              sharpe ratio:
+                type: "number"
+
+  /portfolio:
+    get:
+      operationId: "portfolioservice.read"
+      tags:
+        - portfolioservice
+      summary: "Portfolio api"
+      description: "read summary optimized portfolio"
+      parameters:
+        - name: symbols
+          in: query
+          description: stock symbols, check instrument API for symbol list
+          type: array
+          items:
+            type: string
+          required: True
+        - name: start_date
+          in: query
+          description: start date of price data format YYYY-MM-DD example 2018-10-11
+          type: string
+          required: True
+        - name: end_date
+          in: query
+          description: end date of price data format YYYY-MM-DD example 2018-10-11
+          type: string
+          required: True
+        - name: cum_ret
+          in: query
+          description: cumulative return data history with boolean parameters, true or false
+          type: boolean
+          required: False
+          allowEmptyValue: true
+      responses:
+        200:
+          description: "Successful read portfolio operation"
+          schema:
+            properties:
+              Maximum sharpe portfolio:
+                type: "object"
+              Minimum volatility portfolio:
+                type: "object"
+              Cumulative Return:
+                type: "object"

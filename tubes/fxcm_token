@@ -1,0 +1,4 @@
+[FXCM]
+log_level = error
+log_file = /Users/macone/Apps/python/fxcm/fxcm_token
+access_token = 3afaf317a5423a9bfebc1c63e2f8c036fa40197a
